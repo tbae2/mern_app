@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/tbae2/mern_app#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "babel-preset-react": "^6.11.1",
+    "babelify": "^7.3.0",
+    "express": "^4.14.0",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1"
   }
 }
