@@ -2,11 +2,13 @@ var BugList = React.createClass({
   displayName: "BugList",
 
   render: function () {
+
+    //bugs = data attribute, passing in the "bugs" data array
     return React.createElement(
       "div",
       null,
       React.createElement(BugFilter, null),
-      React.createElement(BugTable, null),
+      React.createElement(BugTable, { bugs: bugs }),
       React.createElement(BugAdd, null)
     );
   }
@@ -23,10 +25,17 @@ var BugFilter = React.createClass({
   }
 });
 
+var bugs = [{ id: 1, status: "open", priority: "P1", owner: "Tman", title: "App crashes upon opening" }, { id: 2, status: "open", priority: "P2", owner: "TmanQ", title: "App crashes upon close" }];
+
 var BugTable = React.createClass({
   displayName: "BugTable",
 
   render: function () {
+    //this maps the data sent from BugList, from the bugs array, you need key so that react can keep track of the component, bug sends all the data to BugRow as "bug"
+    //bugRows returns the results of each data item that is created by bugRow, then placed as a whole into the return render.
+    var bugRows = this.props.bugs.map(function (bug) {
+      return React.createElement(BugRow, { key: bug.id, bug: bug });
+    });
     return React.createElement(
       "table",
       null,
@@ -66,8 +75,7 @@ var BugTable = React.createClass({
       React.createElement(
         "tbody",
         null,
-        React.createElement(BugRow, { id: 1, status: "open", priority: "P1", owner: "Tman", title: "App crashes upon opening" }),
-        React.createElement(BugRow, { id: 2, status: "open", priority: "P2", owner: "TmanQ", title: "App crashes upon close" })
+        bugRows
       )
     );
   }
@@ -88,6 +96,7 @@ var BugAdd = React.createClass({
 var BugRow = React.createClass({
   displayName: "BugRow",
 
+  //receives the "bug" data object , properties, target them as below. 
   render: function () {
     return React.createElement(
       "tr",
@@ -95,27 +104,27 @@ var BugRow = React.createClass({
       React.createElement(
         "td",
         null,
-        this.props.id
+        this.props.bug.id
       ),
       React.createElement(
         "td",
         null,
-        this.props.status
+        this.props.bug.status
       ),
       React.createElement(
         "td",
         null,
-        this.props.priority
+        this.props.bug.priority
       ),
       React.createElement(
         "td",
         null,
-        this.props.owner
+        this.props.bug.owner
       ),
       React.createElement(
         "td",
         null,
-        this.props.title
+        this.props.bug.title
       )
     );
   }
