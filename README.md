@@ -1,2 +1,2 @@
 # mern_app
-utilizing hasnode mern guide
+utilizing hashnode mern guide
