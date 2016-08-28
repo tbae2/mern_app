@@ -1,14 +1,31 @@
 var BugList = React.createClass({
+  getInitialState: function(){
+    return {bugs: bugsData}
+  },
   render: function () {
 
     //bugs = data attribute, passing in the "bugs" data array
+    //button on click test newBug
     return (
       <div>
         <BugFilter />
-        <BugTable bugs={bugs}/>
+        <BugTable bugs={this.state.bugs}/>
         <BugAdd />
+      <button onClick={this.testNewBug}>Test Add New Bug</button>
       </div>
     );
+  },
+  testNewBug: function() {
+    //increment the key id so react can track it, pass bug to new bug
+      var incrementId = this.state.bugs.length + 1;
+      this.addBug({id: incrementId, status:"open",owner:"tman2",priority:"P2",title:"test bug add"});
+  },
+  addBug: function (newBug) {
+    //this function adds data to the base data set, once th e state is set, the component updates that displays this(bug table in this instance);
+    var updatedBugs = this.state.bugs;
+    updatedBugs.push(newBug);
+    this.setState({bugs: updatedBugs});
+
   }
 })
 var BugFilter = React.createClass({
@@ -19,7 +36,7 @@ var BugFilter = React.createClass({
   }
 });
 
-var bugs = [
+var bugsData = [
   {id: 1, status:"open", priority:"P1", owner:"Tman", title:"App crashes upon opening"},
   {id: 2, status:"open", priority:"P2", owner:"TmanQ", title:"App crashes upon close"}
 ]
@@ -62,7 +79,7 @@ var BugAdd = React.createClass({
         });
 
 var BugRow = React.createClass({
-  //receives the "bug" data object , properties, target them as below. 
+  //receives the "bug" data object , properties, target them as below.
           render: function() {
     return (
         <tr className="bugrow">
