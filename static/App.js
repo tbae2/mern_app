@@ -7,29 +7,26 @@ var BugList = React.createClass({
   render: function () {
 
     //bugs = data attribute, passing in the "bugs" data array
-    //button on click test newBug
+
     return React.createElement(
       "div",
       null,
       React.createElement(BugFilter, null),
       React.createElement(BugTable, { bugs: this.state.bugs }),
-      React.createElement(BugAdd, null),
-      React.createElement(
-        "button",
-        { onClick: this.testNewBug },
-        "Test Add New Bug"
-      )
+      React.createElement(BugAdd, { onBugSubmit: this.addBug })
     );
   },
-  testNewBug: function () {
-    //increment the key id so react can track it, pass bug to new bug
-    var incrementId = this.state.bugs.length + 1;
-    this.addBug({ id: incrementId, status: "open", owner: "tman2", priority: "P2", title: "test bug add" });
-  },
+  // testNewBug: function() {
+  //   //increment the key id so react can track it, pass bug to new bug
+  //     var incrementId = this.state.bugs.length + 1;
+  //     this.addBug({id: incrementId, status:"open",owner:"tman2",priority:"P2",title:"test bug add"});
+  // },
   addBug: function (newBug) {
-    //this function adds data to the base data set, once th e state is set, the component updates that displays this(bug table in this instance);
+    //this function adds data to the base data set, once the state is set, the component updates that displays this(bug table in this instance);
+    var incrementId = this.state.bugs.length + 1;
     var updatedBugs = this.state.bugs;
-    updatedBugs.push(newBug);
+    updatedBugs.push({ id: incrementId, status: "new", priority: "P1", owner: newBug.owner, title: newBug.title });
+    console.log(updatedBugs);
     this.setState({ bugs: updatedBugs });
   }
 });
@@ -104,11 +101,29 @@ var BugTable = React.createClass({
 var BugAdd = React.createClass({
   displayName: "BugAdd",
 
+  getInitialState: function () {
+    return { owner: '', title: '' };
+  },
+  handleOwnerChange: function (e) {
+    //update input form state of owner to show user input and not erase
+    this.setState({ owner: e.target.value });
+  },
+  handleTitleChange: function (e) {
+    this.setState({ title: e.target.value });
+  },
+  handleSubmit: function (event) {
+    var owner = this.state.owner.trim();
+    var title = this.state.title.trim();
+    this.props.onBugSubmit({ owner: owner, title: title });
+    this.setState({ owner: '', title: '' });
+  },
   render: function () {
     return React.createElement(
-      "div",
-      null,
-      "This is the section to add a bug "
+      "form",
+      { className: "addBugForm", onSubmit: this.handleSubmit },
+      React.createElement("input", { type: "text", value: this.state.owner, onChange: this.handleOwnerChange }),
+      React.createElement("input", { type: "text", value: this.state.title, onChange: this.handleTitleChange }),
+      React.createElement("input", { type: "submit", value: "Add Bug" })
     );
   }
 });
