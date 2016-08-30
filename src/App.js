@@ -15,6 +15,8 @@ var BugList = React.createClass({
       </div>
     );
   },
+
+
   // testNewBug: function() {
   //   //increment the key id so react can track it, pass bug to new bug
   //     var incrementId = this.state.bugs.length + 1;
