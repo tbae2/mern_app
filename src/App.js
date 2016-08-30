@@ -29,7 +29,7 @@ var BugList = React.createClass({
     this.setState({bugs: updatedBugs});
 
   }
-})
+});
 var BugFilter = React.createClass({
   render: function () {
     return (
@@ -85,16 +85,17 @@ var BugAdd = React.createClass({
   },
   handleSubmit: function(event){
     var owner = this.state.owner.trim();
+      console.log(owner);
     var title = this.state.title.trim();
     this.props.onBugSubmit({owner: owner, title:title});
     this.setState({owner:'',title:''});
   },
   render: function() {
     return (
-      <form className="addBugForm" onSubmit={this.handleSubmit}>
+      <form className="addBugForm">
         <input type="text" value={this.state.owner} onChange={this.handleOwnerChange}/>
         <input type="text" value={this.state.title} onChange={this.handleTitleChange}/>
-        <input type="submit" value="Add Bug"/>
+        <button type="button" onClick={this.handleSubmit}>Add Bug</button>
       </form>
   );
  }

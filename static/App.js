@@ -113,6 +113,7 @@ var BugAdd = React.createClass({
   },
   handleSubmit: function (event) {
     var owner = this.state.owner.trim();
+    console.log(owner);
     var title = this.state.title.trim();
     this.props.onBugSubmit({ owner: owner, title: title });
     this.setState({ owner: '', title: '' });
@@ -120,10 +121,14 @@ var BugAdd = React.createClass({
   render: function () {
     return React.createElement(
       "form",
-      { className: "addBugForm", onSubmit: this.handleSubmit },
+      { className: "addBugForm" },
       React.createElement("input", { type: "text", value: this.state.owner, onChange: this.handleOwnerChange }),
       React.createElement("input", { type: "text", value: this.state.title, onChange: this.handleTitleChange }),
-      React.createElement("input", { type: "submit", value: "Add Bug" })
+      React.createElement(
+        "button",
+        { type: "button", onClick: this.handleSubmit },
+        "Add Bug"
+      )
     );
   }
 });

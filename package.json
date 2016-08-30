@@ -4,7 +4,9 @@
   "description": "mern app hashnode follow along",
   "main": "webapp.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "babel":"babel"
+
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,8 @@
     "react": "^15.3.1",
     "react-dom": "^15.3.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.14.0"
+  },
   "keywords": []
 }
