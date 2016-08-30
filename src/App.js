@@ -16,13 +16,7 @@ var BugList = React.createClass({
     );
   },
 
-
-  // testNewBug: function() {
-  //   //increment the key id so react can track it, pass bug to new bug
-  //     var incrementId = this.state.bugs.length + 1;
-  //     this.addBug({id: incrementId, status:"open",owner:"tman2",priority:"P2",title:"test bug add"});
-  // },
-  addBug: function (newBug) {
+addBug: function (newBug) {
     //this function adds data to the base data set, once the state is set, the component updates that displays this(bug table in this instance);
     var incrementId = this.state.bugs.length + 1;
     var updatedBugs = this.state.bugs;
