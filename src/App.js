@@ -1,6 +1,17 @@
 var BugList = React.createClass({
   getInitialState: function(){
-    return {bugs: bugsData}
+    return {bugs: []}
+  },
+  componentDidMount: function(){
+    $.ajax({
+        url: this.props.url,
+        dataType: 'json',
+        cache: false,
+        success: function (data) {
+          this.setState({bugs: data});
+          //bind in order to take returned data and bind it to the current state(?) need more research
+        }.bind(this)
+    });
   },
   render: function () {
 
@@ -34,10 +45,10 @@ var BugFilter = React.createClass({
   }
 });
 
-var bugsData = [
-  {id: 1, status:"open", priority:"P1", owner:"Tman", title:"App crashes upon opening"},
-  {id: 2, status:"open", priority:"P2", owner:"TmanQ", title:"App crashes upon close"}
-]
+// var bugsData = [
+//   {id: 1, status:"open", priority:"P1", owner:"Tman", title:"App crashes upon opening"},
+//   {id: 2, status:"open", priority:"P2", owner:"TmanQ", title:"App crashes upon close"}
+// ]
 
 var BugTable = React.createClass({
   render: function () {
@@ -112,4 +123,4 @@ var BugRow = React.createClass({
      }
   });
 
-ReactDOM.render(<BugList />, document.getElementById('main'));
+ReactDOM.render(<BugList url="/api/bugs"/>, document.getElementById('main'));

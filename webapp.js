@@ -27,7 +27,7 @@ app.post('/api/bugs',function(req,res){
 })
 
 var arrayBugs = [
-  {id: 1, status:"open", priority:"P1", owner:"Tman", title:"App crashes upon opening"},
+  {id: 1, status:"open", priority:"P1", owner:"Tman", title:"App crashes upon opening5.3"},
   {id: 2, status:"open", priority:"P2", owner:"TmanQ", title:"App crashes upon close"}
 ];
 
