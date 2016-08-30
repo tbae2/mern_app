@@ -7,11 +7,17 @@ var ReactDOM = require('react-dom');
 app.use(express.static('static'));
 app.use(express.static('src'));
 
-/*
-app.get('/', function(req,res){
-  res.send('Hello World!');
+//disable to avoid 304 not modified so it will load changes in this static response state
+app.disable('etag');
+
+app.get('/api/bugs', function(req,res){
+  res.send(JSON.stringify(app.locals.arrayBugs));
 });
-*/
+
+app.locals.arrayBugs = [
+  {id: 1, status:"open", priority:"P1", owner:"Tman", title:"App crashes upon opening"},
+  {id: 2, status:"open", priority:"P2", owner:"TmanQ", title:"App crashes upon close"}
+];
 
 app.listen(3000,function(){
   console.log('Example app listening on port 3000!');
