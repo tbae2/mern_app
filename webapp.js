@@ -5,13 +5,14 @@ var ReactDOM = require('react-dom');
 
 //this serves files pubicly , from declared directory in root of project
 app.use(express.static('static'));
-app.use(express.static('src'));
+//superseded by use of static directory
+//app.use(express.static('src'));
 
 //disable to avoid 304 not modified so it will load changes in this static response state
 app.disable('etag');
 
 app.get('/api/bugs', function(req,res){
-  res.send(JSON.stringify(app.locals.arrayBugs));
+  res.status(200).send(JSON.stringify(app.locals.arrayBugs));
 });
 
 app.locals.arrayBugs = [
