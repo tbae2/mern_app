@@ -34,14 +34,15 @@ addBug: function (newBug) {
     // updatedBugs.push({id: incrementId, status:"new",priority:"P1",owner: newBug.owner, title: newBug.title});
     // console.log(updatedBugs);
     // this.setState({bugs: updatedBugs});
-
+    console.log(newBug);
     $.ajax({
       type: 'POST',
       url: this.props.url,
       contentType: 'application/json',
-      data: JSON.stringify({status:"new",priority:"P1",owner: newBug.owner, title: newBug.title}),
+      data: JSON.stringify(newBug),
       success: function(data){
-        var bug = this.state.bugs.concat(data);
+        var bugData = data;
+        var bug = this.state.bugs.concat(bugData);
 
           this.setState({bugs: bug});
       }.bind(this),
@@ -110,7 +111,7 @@ var BugAdd = React.createClass({
   handleSubmit: function(event){
     var owner = this.state.owner.trim();
     var title = this.state.title.trim();
-    this.props.onBugSubmit({owner: owner, title:title});
+    this.props.onBugSubmit({owner: owner, title:title, status:"open", priority:"P1"});
     this.setState({owner:'',title:''});
   },
   render: function() {

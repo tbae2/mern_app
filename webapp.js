@@ -23,6 +23,7 @@ app.post('/api/bugs',function(req,res){
       var buildNewBug = req.body;
       buildNewBug.id = arrayBugs.length +1 ;
       arrayBugs.push(buildNewBug);
+
       res.json(buildNewBug);
 })
 

@@ -24,7 +24,7 @@ var BugList = React.createClass({
       null,
       React.createElement(BugFilter, null),
       React.createElement(BugTable, { bugs: this.state.bugs }),
-      React.createElement(BugAdd, { addBug: this.addBug })
+      React.createElement(BugAdd, { onBugSubmit: this.addBug })
     );
   },
 
@@ -35,15 +35,15 @@ var BugList = React.createClass({
     // updatedBugs.push({id: incrementId, status:"new",priority:"P1",owner: newBug.owner, title: newBug.title});
     // console.log(updatedBugs);
     // this.setState({bugs: updatedBugs});
-
+    console.log(newBug);
     $.ajax({
-      url: this.props.url,
-      dataType: 'json',
       type: 'POST',
-      data: newBug,
+      url: this.props.url,
+      contentType: 'application/json',
+      data: JSON.stringify(newBug),
       success: function (data) {
-        console.log(data);
-        var bug = this.state.bugs.concat(data);
+        var bugData = data;
+        var bug = this.state.bugs.concat(bugData);
 
         this.setState({ bugs: bug });
       }.bind(this),
@@ -77,7 +77,6 @@ var BugTable = React.createClass({
   render: function () {
     //this maps the data sent from BugList, from the bugs array, you need key so that react can keep track of the component, bug sends all the data to BugRow as "bug"
     //bugRows returns the results of each data item that is created by bugRow, then placed as a whole into the return render.
-    console.log(this.props.bugs);
     var bugRows = this.props.bugs.map(function (bug) {
       return React.createElement(BugRow, { key: bug.id, bug: bug });
     });
@@ -142,7 +141,7 @@ var BugAdd = React.createClass({
   handleSubmit: function (event) {
     var owner = this.state.owner.trim();
     var title = this.state.title.trim();
-    this.props.addBug({ owner: owner, title: title });
+    this.props.onBugSubmit({ owner: owner, title: title, status: "open", priority: "P1" });
     this.setState({ owner: '', title: '' });
   },
   render: function () {
