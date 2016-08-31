@@ -29,11 +29,27 @@ var BugList = React.createClass({
 
 addBug: function (newBug) {
     //this function adds data to the base data set, once the state is set, the component updates that displays this(bug table in this instance);
-    var incrementId = this.state.bugs.length + 1;
-    var updatedBugs = this.state.bugs;
-    updatedBugs.push({id: incrementId, status:"new",priority:"P1",owner: newBug.owner, title: newBug.title});
-    console.log(updatedBugs);
-    this.setState({bugs: updatedBugs});
+    // var incrementId = this.state.bugs.length + 1;
+    // var updatedBugs = this.state.bugs;
+    // updatedBugs.push({id: incrementId, status:"new",priority:"P1",owner: newBug.owner, title: newBug.title});
+    // console.log(updatedBugs);
+    // this.setState({bugs: updatedBugs});
+
+    $.ajax({
+      type: 'POST',
+      url: this.props.url,
+      contentType: 'application/json',
+      data: JSON.stringify({status:"new",priority:"P1",owner: newBug.owner, title: newBug.title}),
+      success: function(data){
+        var bug = this.state.bugs.concat(data);
+
+          this.setState({bugs: bug});
+      }.bind(this),
+      error: function(xhr,status,err){
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+
 
   }
 });
@@ -51,6 +67,7 @@ var BugFilter = React.createClass({
 // ]
 
 var BugTable = React.createClass({
+
   render: function () {
     //this maps the data sent from BugList, from the bugs array, you need key so that react can keep track of the component, bug sends all the data to BugRow as "bug"
     //bugRows returns the results of each data item that is created by bugRow, then placed as a whole into the return render.
@@ -92,7 +109,6 @@ var BugAdd = React.createClass({
   },
   handleSubmit: function(event){
     var owner = this.state.owner.trim();
-      console.log(owner);
     var title = this.state.title.trim();
     this.props.onBugSubmit({owner: owner, title:title});
     this.setState({owner:'',title:''});

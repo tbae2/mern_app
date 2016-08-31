@@ -1,5 +1,5 @@
 var BugList = React.createClass({
-  displayName: "BugList",
+  displayName: 'BugList',
 
   getInitialState: function () {
     return { bugs: [] };
@@ -20,31 +20,47 @@ var BugList = React.createClass({
     //bugs = data attribute, passing in the "bugs" data array
 
     return React.createElement(
-      "div",
+      'div',
       null,
       React.createElement(BugFilter, null),
       React.createElement(BugTable, { bugs: this.state.bugs }),
-      React.createElement(BugAdd, { onBugSubmit: this.addBug })
+      React.createElement(BugAdd, { addBug: this.addBug })
     );
   },
 
   addBug: function (newBug) {
     //this function adds data to the base data set, once the state is set, the component updates that displays this(bug table in this instance);
-    var incrementId = this.state.bugs.length + 1;
-    var updatedBugs = this.state.bugs;
-    updatedBugs.push({ id: incrementId, status: "new", priority: "P1", owner: newBug.owner, title: newBug.title });
-    console.log(updatedBugs);
-    this.setState({ bugs: updatedBugs });
+    // var incrementId = this.state.bugs.length + 1;
+    // var updatedBugs = this.state.bugs;
+    // updatedBugs.push({id: incrementId, status:"new",priority:"P1",owner: newBug.owner, title: newBug.title});
+    // console.log(updatedBugs);
+    // this.setState({bugs: updatedBugs});
+
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      type: 'POST',
+      data: newBug,
+      success: function (data) {
+        console.log(data);
+        var bug = this.state.bugs.concat(data);
+
+        this.setState({ bugs: bug });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
   }
 });
 var BugFilter = React.createClass({
-  displayName: "BugFilter",
+  displayName: 'BugFilter',
 
   render: function () {
     return React.createElement(
-      "div",
+      'div',
       null,
-      "This is the BugFilter component.A filter option would go here "
+      'This is the BugFilter component.A filter option would go here '
     );
   }
 });
@@ -55,52 +71,54 @@ var BugFilter = React.createClass({
 // ]
 
 var BugTable = React.createClass({
-  displayName: "BugTable",
+  displayName: 'BugTable',
+
 
   render: function () {
     //this maps the data sent from BugList, from the bugs array, you need key so that react can keep track of the component, bug sends all the data to BugRow as "bug"
     //bugRows returns the results of each data item that is created by bugRow, then placed as a whole into the return render.
+    console.log(this.props.bugs);
     var bugRows = this.props.bugs.map(function (bug) {
       return React.createElement(BugRow, { key: bug.id, bug: bug });
     });
     return React.createElement(
-      "table",
+      'table',
       null,
       React.createElement(
-        "thead",
+        'thead',
         null,
         React.createElement(
-          "tr",
+          'tr',
           null,
           React.createElement(
-            "th",
+            'th',
             null,
-            "ID"
+            'ID'
           ),
           React.createElement(
-            "th",
+            'th',
             null,
-            "Status"
+            'Status'
           ),
           React.createElement(
-            "th",
+            'th',
             null,
-            "Priority"
+            'Priority'
           ),
           React.createElement(
-            "th",
+            'th',
             null,
-            "Owner"
+            'Owner'
           ),
           React.createElement(
-            "th",
+            'th',
             null,
-            "Title"
+            'Title'
           )
         )
       ),
       React.createElement(
-        "tbody",
+        'tbody',
         null,
         bugRows
       )
@@ -109,7 +127,7 @@ var BugTable = React.createClass({
 });
 
 var BugAdd = React.createClass({
-  displayName: "BugAdd",
+  displayName: 'BugAdd',
 
   getInitialState: function () {
     return { owner: '', title: '' };
@@ -123,56 +141,55 @@ var BugAdd = React.createClass({
   },
   handleSubmit: function (event) {
     var owner = this.state.owner.trim();
-    console.log(owner);
     var title = this.state.title.trim();
-    this.props.onBugSubmit({ owner: owner, title: title });
+    this.props.addBug({ owner: owner, title: title });
     this.setState({ owner: '', title: '' });
   },
   render: function () {
     return React.createElement(
-      "form",
-      { className: "addBugForm" },
-      React.createElement("input", { type: "text", value: this.state.owner, onChange: this.handleOwnerChange }),
-      React.createElement("input", { type: "text", value: this.state.title, onChange: this.handleTitleChange }),
+      'form',
+      { className: 'addBugForm' },
+      React.createElement('input', { type: 'text', value: this.state.owner, onChange: this.handleOwnerChange }),
+      React.createElement('input', { type: 'text', value: this.state.title, onChange: this.handleTitleChange }),
       React.createElement(
-        "button",
-        { type: "button", onClick: this.handleSubmit },
-        "Add Bug"
+        'button',
+        { type: 'button', onClick: this.handleSubmit },
+        'Add Bug'
       )
     );
   }
 });
 
 var BugRow = React.createClass({
-  displayName: "BugRow",
+  displayName: 'BugRow',
 
   //receives the "bug" data object , properties, target them as below.
   render: function () {
     return React.createElement(
-      "tr",
-      { className: "bugrow" },
+      'tr',
+      { className: 'bugrow' },
       React.createElement(
-        "td",
+        'td',
         null,
         this.props.bug.id
       ),
       React.createElement(
-        "td",
+        'td',
         null,
         this.props.bug.status
       ),
       React.createElement(
-        "td",
+        'td',
         null,
         this.props.bug.priority
       ),
       React.createElement(
-        "td",
+        'td',
         null,
         this.props.bug.owner
       ),
       React.createElement(
-        "td",
+        'td',
         null,
         this.props.bug.title
       )
@@ -180,4 +197,4 @@ var BugRow = React.createClass({
   }
 });
 
-ReactDOM.render(React.createElement(BugList, { url: "/api/bugs" }), document.getElementById('main'));
+ReactDOM.render(React.createElement(BugList, { url: '/api/bugs' }), document.getElementById('main'));
