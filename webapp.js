@@ -29,11 +29,20 @@ app.get('/api/bugs', function(req,res){
 
 app.post('/api/bugs',function(req,res){
     //take in POST request , add ID, add data to array, return bug added to show ID
-      var buildNewBug = req.body;
-      buildNewBug.id = arrayBugs.length +1 ;
-      arrayBugs.push(buildNewBug);
+      // var buildNewBug = req.body;
+      // buildNewBug.id = arrayBugs.length +1 ;
+      // arrayBugs.push(buildNewBug);
+      //res.json(buildNewBug);
+      var requested = req.body;
+      //insert 1 record into mongodb
+      db.collection('bugs').insertOne(requested, function(err, result){
+          //find latest inserted record and return the json. utilizing _id that was attached to the the successful import
+            db.collection('bugs').find(requested._id).limit(1).next(function(err, doc){
+                res.json(doc);
+            })
+      });
 
-      res.json(buildNewBug);
+
 })
 
 
