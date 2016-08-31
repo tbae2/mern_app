@@ -78,7 +78,7 @@ var BugTable = React.createClass({
     //this maps the data sent from BugList, from the bugs array, you need key so that react can keep track of the component, bug sends all the data to BugRow as "bug"
     //bugRows returns the results of each data item that is created by bugRow, then placed as a whole into the return render.
     var bugRows = this.props.bugs.map(function (bug) {
-      return React.createElement(BugRow, { key: bug.id, bug: bug });
+      return React.createElement(BugRow, { key: bug._id, bug: bug });
     });
     return React.createElement(
       'table',
@@ -170,7 +170,7 @@ var BugRow = React.createClass({
       React.createElement(
         'td',
         null,
-        this.props.bug.id
+        this.props.bug._id
       ),
       React.createElement(
         'td',
