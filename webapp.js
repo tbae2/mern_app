@@ -4,7 +4,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
-
+const jquery = require('jquery');
 var db;
 
 //this serves files pubicly , from declared directory in root of project
