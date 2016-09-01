@@ -20,7 +20,14 @@ gulp.task('watch',function(){
    b.on('update', makeBundle);
 
     function makeBundle(){
-      b.transform("babelify", {presets: ["react"]}).bundle().pipe(source('bundle.js')).pipe(gulp.dest('./static/'));
+      b.transform("babelify", {presets: ["react"]}).bundle()
+        .pipe(source('bundle.js'))
+        .on('error', function(err){
+          console.log(err.message);
+          console.log(err.codeFrame);
+        })
+        .pipe(gulp.dest('./static/'));
+        console.log("Bundle updated successfully");
     }
 
     makeBundle();
