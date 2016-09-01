@@ -22,7 +22,16 @@ app.get('/api/bugs', function(req,res){
   // res.json(arrayBugs);
   //rev.3
   //target collection bugs, with connection to database 'db', find() to find all in collection, toArray
-  db.collection('bugs').find().toArray(function(err, docs){
+  //rev.4
+  var filter = {};
+  if(req.query.priority){
+    filter.priority = req.query.priority;
+  }
+  if(req.query.status){
+    filter.status = req.query.status;
+  }
+
+  db.collection('bugs').find(filter).toArray(function(err, docs){
     res.json(docs);
   });
 });
@@ -33,6 +42,8 @@ app.post('/api/bugs',function(req,res){
       // buildNewBug.id = arrayBugs.length +1 ;
       // arrayBugs.push(buildNewBug);
       //res.json(buildNewBug);
+
+
       var requested = req.body;
       //insert 1 record into mongodb
       db.collection('bugs').insertOne(requested, function(err, result){
