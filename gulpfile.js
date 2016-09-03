@@ -14,7 +14,7 @@ gulp.task('watch',function(){
      entries: ['./src/App.js'],
      cache: {},
      packageCache: {},
-     plugin: [watchify]
+     plugin: ['watchify']
    });
 
    b.on('update', makeBundle);

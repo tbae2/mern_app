@@ -58,7 +58,7 @@ var BugList = React.createClass({
     this.loadData({});
   },
   loadData: function(filter){
-    console.log(filter);
+
       $.ajax(this.props.url, {data: filter}).done(function(data){
           this.setState({bugs: data});
       }.bind(this));

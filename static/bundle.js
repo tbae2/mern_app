@@ -30872,7 +30872,17 @@ var BugAdd = React.createClass({
     this.setState({ owner: '', title: '' });
   },
   render: function () {
-    return React.createElement('form', { className: 'addBugForm' }, React.createElement('input', { type: 'text', value: this.state.owner, onChange: this.handleOwnerChange }), React.createElement('input', { type: 'text', value: this.state.title, onChange: this.handleTitleChange }), React.createElement('button', { type: 'button', onClick: this.handleSubmit }, 'Add Bug'));
+    return React.createElement(
+      'form',
+      { className: 'addBugForm' },
+      React.createElement('input', { type: 'text', value: this.state.owner, onChange: this.handleOwnerChange }),
+      React.createElement('input', { type: 'text', value: this.state.title, onChange: this.handleTitleChange }),
+      React.createElement(
+        'button',
+        { type: 'button', onClick: this.handleSubmit },
+        'Add Bug'
+      )
+    );
   }
 });
 
@@ -30885,12 +30895,22 @@ const ReactDOM = require('react-dom');
 var BugFilter = React.createClass({
   displayName: 'BugFilter',
 
+  getInitialState: function () {
+    return { priority: "",
+      status: "" };
+  },
+  selectChangePriority: function (event) {
+    this.setState({ priority: event.target.value });
+  },
+  selectChangeStatus: function (event) {
+    this.setState({ status: event.target.value });
+  },
   sendFilter: function (e) {
-    this.props.loadData({ priority: "P2" });
+    this.props.loadData({ priority: this.state.priority, status: this.state.status });
     console.log("yes");
   },
   render: function () {
-    return React.createElement('button', { onClick: this.sendFilter }, 'hard code filter');
+    return React.createElement('div', null, React.createElement('select', { onChange: this.selectChangePriority, value: this.state.priority }, React.createElement('option', { value: '' }, 'All'), React.createElement('option', { value: 'P1' }, 'P1'), React.createElement('option', { value: 'P2' }, 'P2'), React.createElement('option', { value: 'P3' }, 'P3'), React.createElement('option', { value: 'P4' }, 'P4')), React.createElement('select', { onChange: this.selectChangeStatus, value: this.state.status }, React.createElement('option', { value: 'open' }, 'open'), React.createElement('option', { value: 'closed' }, 'closed')), React.createElement('button', { onClick: this.sendFilter }, 'Filter'));
   }
 });
 
@@ -30936,7 +30956,7 @@ var BugList = React.createClass({
     this.loadData({});
   },
   loadData: function (filter) {
-    console.log(filter);
+
     $.ajax(this.props.url, { data: filter }).done(function (data) {
       this.setState({ bugs: data });
     }.bind(this));
