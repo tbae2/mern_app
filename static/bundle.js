@@ -30885,8 +30885,12 @@ const ReactDOM = require('react-dom');
 var BugFilter = React.createClass({
   displayName: 'BugFilter',
 
+  sendFilter: function (e) {
+    this.props.loadData({ priority: "P2" });
+    console.log("yes");
+  },
   render: function () {
-    return React.createElement('div', null, 'This is the BugFilter component.A filter option would go here ');
+    return React.createElement('button', { onClick: this.sendFilter }, 'hard code filter');
   }
 });
 
@@ -30929,21 +30933,19 @@ var BugList = React.createClass({
     return { bugs: [] };
   },
   componentDidMount: function () {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      cache: false,
-      success: function (data) {
-        this.setState({ bugs: data });
-        //bind in order to take returned data and bind it to the current state(?) need more research
-      }.bind(this)
-    });
+    this.loadData({});
+  },
+  loadData: function (filter) {
+    console.log(filter);
+    $.ajax(this.props.url, { data: filter }).done(function (data) {
+      this.setState({ bugs: data });
+    }.bind(this));
   },
   render: function () {
 
     //bugs = data attribute, passing in the "bugs" data array
 
-    return React.createElement('div', null, React.createElement(BugFilter, null), React.createElement(BugTable, { bugs: this.state.bugs }), React.createElement(BugAdd, { onBugSubmit: this.addBug }));
+    return React.createElement('div', null, React.createElement(BugFilter, { loadData: this.loadData }), React.createElement(BugTable, { bugs: this.state.bugs }), React.createElement(BugAdd, { onBugSubmit: this.addBug }));
   },
 
   addBug: function (newBug) {

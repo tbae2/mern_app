@@ -55,15 +55,14 @@ var BugList = React.createClass({
     return {bugs: []}
   },
   componentDidMount: function(){
-    $.ajax({
-        url: this.props.url,
-        dataType: 'json',
-        cache: false,
-        success: function (data) {
+    this.loadData({});
+  },
+  loadData: function(filter){
+    console.log(filter);
+      $.ajax(this.props.url, {data: filter}).done(function(data){
           this.setState({bugs: data});
-          //bind in order to take returned data and bind it to the current state(?) need more research
-        }.bind(this)
-    });
+      }.bind(this));
+
   },
   render: function () {
 
@@ -71,7 +70,7 @@ var BugList = React.createClass({
 
     return (
       <div>
-        <BugFilter />
+        <BugFilter loadData={this.loadData}/>
         <BugTable bugs={this.state.bugs}/>
         <BugAdd onBugSubmit={this.addBug}/>
 
