@@ -70,7 +70,7 @@ var BugList = React.createClass({
 
     return (
       <div>
-        <BugFilter loadData={this.loadData}/>
+        <BugFilter loadData={this.loadData} urlFilter={this.props.location.query}/>
         <BugTable bugs={this.state.bugs}/>
         <BugAdd onBugSubmit={this.addBug}/>
 

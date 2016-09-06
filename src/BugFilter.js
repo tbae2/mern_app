@@ -5,8 +5,11 @@ const ReactDOM = require('react-dom');
 
 var BugFilter = React.createClass({
   getInitialState: function(){
-    return {priority: "",
-            status: ""}
+
+    var storeQuery = this.props.urlFilter;
+    console.log(storeQuery.priority);
+    return {priority: storeQuery.priority,
+            status: storeQuery.status};
   },
   selectChangePriority: function(event){
     this.setState({priority: event.target.value})
@@ -16,7 +19,7 @@ var BugFilter = React.createClass({
   },
   sendFilter: function(e){
         this.props.loadData({priority: this.state.priority, status: this.state.status});
-        console.log("yes");
+        console.log(this.state.priority);
   },
   render: function () {
     return (
