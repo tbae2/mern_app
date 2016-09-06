@@ -59,7 +59,7 @@ var BugList = React.createClass({
   },
   loadData: function(filter){
 
-      $.ajax(this.props.url, {data: filter}).done(function(data){
+      $.ajax('/api/bugs', {data: filter}).done(function(data){
           this.setState({bugs: data});
       }.bind(this));
 
@@ -88,7 +88,7 @@ addBug: function (newBug) {
     console.log(newBug);
     $.ajax({
       type: 'POST',
-      url: this.props.url,
+      url: '/api/bugs',
       contentType: 'application/json',
       data: JSON.stringify(newBug),
       success: function(data){
@@ -98,7 +98,7 @@ addBug: function (newBug) {
           this.setState({bugs: bug});
       }.bind(this),
       error: function(xhr,status,err){
-        console.error(this.props.url, status, err.toString());
+        console.error('/api/bugs', status, err.toString());
       }
     });
   }
