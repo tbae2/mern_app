@@ -36230,11 +36230,21 @@ var NoMatch = React.createClass({
   displayName: 'NoMatch',
 
   render: function () {
-    return React.createElement('h2', null, 'No Match for the route');
+    return React.createElement(
+      'h2',
+      null,
+      'No Match for the route'
+    );
   }
 });
 
-ReactDOM.render(React.createElement(Router, { history: hashHistory }, React.createElement(Route, { path: '/bugs', component: BugList }), React.createElement(Redirect, { from: '/', to: '/bugs' }), React.createElement(Route, { path: '*', component: NoMatch })), document.getElementById('main'));
+ReactDOM.render(React.createElement(
+  Router,
+  { history: hashHistory },
+  React.createElement(Route, { path: '/bugs', component: BugList }),
+  React.createElement(Redirect, { from: '/', to: '/bugs' }),
+  React.createElement(Route, { path: '*', component: NoMatch })
+), document.getElementById('main'));
 
 },{"./BugList":239,"react":233,"react-dom":8,"react-router":38}],237:[function(require,module,exports){
 const React = require('react');
@@ -36260,7 +36270,17 @@ var BugAdd = React.createClass({
     this.setState({ owner: '', title: '' });
   },
   render: function () {
-    return React.createElement('form', { className: 'addBugForm' }, React.createElement('input', { type: 'text', value: this.state.owner, onChange: this.handleOwnerChange }), React.createElement('input', { type: 'text', value: this.state.title, onChange: this.handleTitleChange }), React.createElement('button', { type: 'button', onClick: this.handleSubmit }, 'Add Bug'));
+    return React.createElement(
+      'form',
+      { className: 'addBugForm' },
+      React.createElement('input', { type: 'text', value: this.state.owner, onChange: this.handleOwnerChange }),
+      React.createElement('input', { type: 'text', value: this.state.title, onChange: this.handleTitleChange }),
+      React.createElement(
+        'button',
+        { type: 'button', onClick: this.handleSubmit },
+        'Add Bug'
+      )
+    );
   }
 });
 
@@ -36300,7 +36320,58 @@ var BugFilter = React.createClass({
     this.props.loadData(newFilter);
   },
   render: function () {
-    return React.createElement('div', null, React.createElement('select', { onChange: this.selectChangePriority, value: this.state.priority }, React.createElement('option', { value: '' }, 'All'), React.createElement('option', { value: 'P1' }, 'P1'), React.createElement('option', { value: 'P2' }, 'P2'), React.createElement('option', { value: 'P3' }, 'P3'), React.createElement('option', { value: 'P4' }, 'P4')), React.createElement('select', { onChange: this.selectChangeStatus, value: this.state.status }, React.createElement('option', { value: 'open' }, 'open'), React.createElement('option', { value: 'closed' }, 'closed')), React.createElement('button', { onClick: this.sendFilter }, 'Filter'));
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'select',
+        { onChange: this.selectChangePriority, value: this.state.priority },
+        React.createElement(
+          'option',
+          { value: '' },
+          'All'
+        ),
+        React.createElement(
+          'option',
+          { value: 'P1' },
+          'P1'
+        ),
+        React.createElement(
+          'option',
+          { value: 'P2' },
+          'P2'
+        ),
+        React.createElement(
+          'option',
+          { value: 'P3' },
+          'P3'
+        ),
+        React.createElement(
+          'option',
+          { value: 'P4' },
+          'P4'
+        )
+      ),
+      React.createElement(
+        'select',
+        { onChange: this.selectChangeStatus, value: this.state.status },
+        React.createElement(
+          'option',
+          { value: 'open' },
+          'open'
+        ),
+        React.createElement(
+          'option',
+          { value: 'closed' },
+          'closed'
+        )
+      ),
+      React.createElement(
+        'button',
+        { onClick: this.sendFilter },
+        'Filter'
+      )
+    );
   }
 });
 
@@ -36358,7 +36429,7 @@ var BugList = React.createClass({
     return React.createElement('div', null, React.createElement(BugFilter, { loadData: this.changeFilter, urlFilter: this.props.location.query }), React.createElement(BugTable, { bugs: this.state.bugs }), React.createElement(BugAdd, { onBugSubmit: this.addBug }));
   },
   changeFilter: function (newFilter) {
-    this.props.history.push({ search: '?' + $.param(newFilter) });
+    this.context.router.push({ search: '?' + $.param(newFilter) });
     this.loadData(newFilter);
   },
 
@@ -36369,7 +36440,6 @@ var BugList = React.createClass({
     // updatedBugs.push({id: incrementId, status:"new",priority:"P1",owner: newBug.owner, title: newBug.title});
     // console.log(updatedBugs);
     // this.setState({bugs: updatedBugs});
-    console.log(newBug);
     $.ajax({
       type: 'POST',
       url: '/api/bugs',
@@ -36387,6 +36457,11 @@ var BugList = React.createClass({
     });
   }
 });
+
+//react router v2.0
+BugList.contextTypes = {
+  router: React.PropTypes.object
+};
 
 module.exports = BugList;
 

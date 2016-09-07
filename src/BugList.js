@@ -78,7 +78,7 @@ var BugList = React.createClass({
     );
   },
   changeFilter: function(newFilter){
-    this.props.history.push({search: '?' + $.param(newFilter)});
+    this.context.router.push({search: '?' + $.param(newFilter)});
     this.loadData(newFilter);
   }  ,
 
@@ -89,7 +89,6 @@ addBug: function (newBug) {
     // updatedBugs.push({id: incrementId, status:"new",priority:"P1",owner: newBug.owner, title: newBug.title});
     // console.log(updatedBugs);
     // this.setState({bugs: updatedBugs});
-    console.log(newBug);
     $.ajax({
       type: 'POST',
       url: '/api/bugs',
@@ -107,5 +106,11 @@ addBug: function (newBug) {
     });
   }
 });
+
+//react router v2.0
+  BugList.contextTypes= {
+    router: React.PropTypes.object
+  };
+
 
 module.exports = BugList;
