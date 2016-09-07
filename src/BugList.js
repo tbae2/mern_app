@@ -70,13 +70,17 @@ var BugList = React.createClass({
 
     return (
       <div>
-        <BugFilter loadData={this.loadData} urlFilter={this.props.location.query}/>
+        <BugFilter loadData={this.changeFilter} urlFilter={this.props.location.query}/>
         <BugTable bugs={this.state.bugs}/>
         <BugAdd onBugSubmit={this.addBug}/>
 
       </div>
     );
   },
+  changeFilter: function(newFilter){
+    this.props.history.push({search: '?' + $.param(newFilter)});
+    this.loadData(newFilter);
+  }  ,
 
 addBug: function (newBug) {
     //this function adds data to the base data set, once the state is set, the component updates that displays this(bug table in this instance);

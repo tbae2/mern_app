@@ -18,8 +18,18 @@ var BugFilter = React.createClass({
     this.setState({status: event.target.value})
   },
   sendFilter: function(e){
-        this.props.loadData({priority: this.state.priority, status: this.state.status});
-        console.log(this.state.priority);
+        //store the new filter in an object
+        var newFilter = {};
+        //if this state which is priority is not blank then make it equal
+        if(this.state.priority){
+          newFilter.priority = this.state.priority;
+        }
+        if(this.state.status) {
+          newFilter.status = this.state.status;
+        }
+        //send the new filter object through the props sent by the BugList component
+        this.props.loadData(newFilter);
+
   },
   render: function () {
     return (
