@@ -11,6 +11,13 @@ var BugFilter = React.createClass({
     return {priority: storeQuery.priority,
             status: storeQuery.status};
   },
+    componentWillReceiveProps: function(newProps){
+      if(newProps.urlFilter.status === this.state.status && newProps.urlFilter.priority
+      === this.state.priority){ console.log("bugfilter: no change"); return;}
+        this.setState({status: newProps.urlFilter.status,priority: newProps.urlFilter.priority})
+
+    }
+  ,
   selectChangePriority: function(event){
     this.setState({priority: event.target.value})
   },

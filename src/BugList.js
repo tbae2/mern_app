@@ -55,10 +55,21 @@ var BugList = React.createClass({
     return {bugs: []}
   },
   componentDidMount: function(){
-    this.loadData({});
+    this.loadData();
   },
-  loadData: function(filter){
-
+    componentDidUpdate: function(prevProps){
+      var oldQuery = prevProps.location.query;
+      var newQuery = this.props.location.query;
+      if(oldQuery.priority === newQuery.priority && oldQuery.status === newQuery.status){
+        console.log("bug list: componentdidupdate: no change ");
+      }else {
+        console.log("buglist:componentdidupdate: changes detected updating component");
+        this.loadData();
+      }
+    },
+  loadData: function(){
+      var query = this.props.location.query || {};
+      var filter = {priority: query.priority, status: query.status}
       $.ajax('/api/bugs', {data: filter}).done(function(data){
           this.setState({bugs: data});
       }.bind(this));
@@ -79,7 +90,7 @@ var BugList = React.createClass({
   },
   changeFilter: function(newFilter){
     this.context.router.push({search: '?' + $.param(newFilter)});
-    this.loadData(newFilter);
+
   }  ,
 
 addBug: function (newBug) {

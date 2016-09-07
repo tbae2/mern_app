@@ -36300,6 +36300,13 @@ var BugFilter = React.createClass({
     return { priority: storeQuery.priority,
       status: storeQuery.status };
   },
+  componentWillReceiveProps: function (newProps) {
+    if (newProps.urlFilter.status === this.state.status && newProps.urlFilter.priority === this.state.priority) {
+      console.log("bugfilter: no change");return;
+    }
+    this.setState({ status: newProps.urlFilter.status, priority: newProps.urlFilter.priority });
+  },
+
   selectChangePriority: function (event) {
     this.setState({ priority: event.target.value });
   },
@@ -36320,58 +36327,7 @@ var BugFilter = React.createClass({
     this.props.loadData(newFilter);
   },
   render: function () {
-    return React.createElement(
-      'div',
-      null,
-      React.createElement(
-        'select',
-        { onChange: this.selectChangePriority, value: this.state.priority },
-        React.createElement(
-          'option',
-          { value: '' },
-          'All'
-        ),
-        React.createElement(
-          'option',
-          { value: 'P1' },
-          'P1'
-        ),
-        React.createElement(
-          'option',
-          { value: 'P2' },
-          'P2'
-        ),
-        React.createElement(
-          'option',
-          { value: 'P3' },
-          'P3'
-        ),
-        React.createElement(
-          'option',
-          { value: 'P4' },
-          'P4'
-        )
-      ),
-      React.createElement(
-        'select',
-        { onChange: this.selectChangeStatus, value: this.state.status },
-        React.createElement(
-          'option',
-          { value: 'open' },
-          'open'
-        ),
-        React.createElement(
-          'option',
-          { value: 'closed' },
-          'closed'
-        )
-      ),
-      React.createElement(
-        'button',
-        { onClick: this.sendFilter },
-        'Filter'
-      )
-    );
+    return React.createElement('div', null, React.createElement('select', { onChange: this.selectChangePriority, value: this.state.priority }, React.createElement('option', { value: '' }, 'All'), React.createElement('option', { value: 'P1' }, 'P1'), React.createElement('option', { value: 'P2' }, 'P2'), React.createElement('option', { value: 'P3' }, 'P3'), React.createElement('option', { value: 'P4' }, 'P4')), React.createElement('select', { onChange: this.selectChangeStatus, value: this.state.status }, React.createElement('option', { value: 'open' }, 'open'), React.createElement('option', { value: 'closed' }, 'closed')), React.createElement('button', { onClick: this.sendFilter }, 'Filter'));
   }
 });
 
@@ -36414,10 +36370,21 @@ var BugList = React.createClass({
     return { bugs: [] };
   },
   componentDidMount: function () {
-    this.loadData({});
+    this.loadData();
   },
-  loadData: function (filter) {
-
+  componentDidUpdate: function (prevProps) {
+    var oldQuery = prevProps.location.query;
+    var newQuery = this.props.location.query;
+    if (oldQuery.priority === newQuery.priority && oldQuery.status === newQuery.status) {
+      console.log("bug list: componentdidupdate: no change ");
+    } else {
+      console.log("buglist:componentdidupdate: changes detected updating component");
+      this.loadData();
+    }
+  },
+  loadData: function () {
+    var query = this.props.location.query || {};
+    var filter = { priority: query.priority, status: query.status };
     $.ajax('/api/bugs', { data: filter }).done(function (data) {
       this.setState({ bugs: data });
     }.bind(this));
@@ -36430,7 +36397,6 @@ var BugList = React.createClass({
   },
   changeFilter: function (newFilter) {
     this.context.router.push({ search: '?' + $.param(newFilter) });
-    this.loadData(newFilter);
   },
 
   addBug: function (newBug) {
