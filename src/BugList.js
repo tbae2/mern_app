@@ -60,6 +60,7 @@ var BugList = React.createClass({
     componentDidUpdate: function(prevProps){
       var oldQuery = prevProps.location.query;
       var newQuery = this.props.location.query;
+      //compare previous query to newly requested query, set state same so it displays filtered query table
       if(oldQuery.priority === newQuery.priority && oldQuery.status === newQuery.status){
         console.log("bug list: componentdidupdate: no change ");
       }else {

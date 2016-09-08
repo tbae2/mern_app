@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-
+adsfaf
 
 var BugFilter = React.createClass({
   getInitialState: function(){
@@ -12,6 +12,7 @@ var BugFilter = React.createClass({
             status: storeQuery.status};
   },
     componentWillReceiveProps: function(newProps){
+      //has the component render based on pre-existing url query 
       if(newProps.urlFilter.status === this.state.status && newProps.urlFilter.priority
       === this.state.priority){ console.log("bugfilter: no change"); return;}
         this.setState({status: newProps.urlFilter.status,priority: newProps.urlFilter.priority})

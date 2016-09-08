@@ -36327,7 +36327,58 @@ var BugFilter = React.createClass({
     this.props.loadData(newFilter);
   },
   render: function () {
-    return React.createElement('div', null, React.createElement('select', { onChange: this.selectChangePriority, value: this.state.priority }, React.createElement('option', { value: '' }, 'All'), React.createElement('option', { value: 'P1' }, 'P1'), React.createElement('option', { value: 'P2' }, 'P2'), React.createElement('option', { value: 'P3' }, 'P3'), React.createElement('option', { value: 'P4' }, 'P4')), React.createElement('select', { onChange: this.selectChangeStatus, value: this.state.status }, React.createElement('option', { value: 'open' }, 'open'), React.createElement('option', { value: 'closed' }, 'closed')), React.createElement('button', { onClick: this.sendFilter }, 'Filter'));
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'select',
+        { onChange: this.selectChangePriority, value: this.state.priority },
+        React.createElement(
+          'option',
+          { value: '' },
+          'All'
+        ),
+        React.createElement(
+          'option',
+          { value: 'P1' },
+          'P1'
+        ),
+        React.createElement(
+          'option',
+          { value: 'P2' },
+          'P2'
+        ),
+        React.createElement(
+          'option',
+          { value: 'P3' },
+          'P3'
+        ),
+        React.createElement(
+          'option',
+          { value: 'P4' },
+          'P4'
+        )
+      ),
+      React.createElement(
+        'select',
+        { onChange: this.selectChangeStatus, value: this.state.status },
+        React.createElement(
+          'option',
+          { value: 'open' },
+          'open'
+        ),
+        React.createElement(
+          'option',
+          { value: 'closed' },
+          'closed'
+        )
+      ),
+      React.createElement(
+        'button',
+        { onClick: this.sendFilter },
+        'Filter'
+      )
+    );
   }
 });
 
@@ -36346,12 +36397,41 @@ var BugRow = React.createClass({
 
   //receives the "bug" data object , properties, target them as below.
   render: function () {
-    return React.createElement('tr', { className: 'bugrow' }, React.createElement('td', null, this.props.bug._id), React.createElement('td', null, this.props.bug.status), React.createElement('td', null, this.props.bug.priority), React.createElement('td', null, this.props.bug.owner), React.createElement('td', null, this.props.bug.title));
+    return React.createElement(
+      'tr',
+      { className: 'bugrow' },
+      React.createElement(
+        'td',
+        null,
+        this.props.bug._id
+      ),
+      React.createElement(
+        'td',
+        null,
+        this.props.bug.status
+      ),
+      React.createElement(
+        'td',
+        null,
+        this.props.bug.priority
+      ),
+      React.createElement(
+        'td',
+        null,
+        this.props.bug.owner
+      ),
+      React.createElement(
+        'td',
+        null,
+        this.props.bug.title
+      )
+    );
   }
 });
 
 var BugTable = React.createClass({
   displayName: 'BugTable',
+
 
   render: function () {
     //this maps the data sent from BugList, from the bugs array, you need key so that react can keep track of the component, bug sends all the data to BugRow as "bug"
@@ -36359,7 +36439,48 @@ var BugTable = React.createClass({
     var bugRows = this.props.bugs.map(function (bug) {
       return React.createElement(BugRow, { key: bug._id, bug: bug });
     });
-    return React.createElement('table', null, React.createElement('thead', null, React.createElement('tr', null, React.createElement('th', null, 'ID'), React.createElement('th', null, 'Status'), React.createElement('th', null, 'Priority'), React.createElement('th', null, 'Owner'), React.createElement('th', null, 'Title'))), React.createElement('tbody', null, bugRows));
+    return React.createElement(
+      'table',
+      null,
+      React.createElement(
+        'thead',
+        null,
+        React.createElement(
+          'tr',
+          null,
+          React.createElement(
+            'th',
+            null,
+            'ID'
+          ),
+          React.createElement(
+            'th',
+            null,
+            'Status'
+          ),
+          React.createElement(
+            'th',
+            null,
+            'Priority'
+          ),
+          React.createElement(
+            'th',
+            null,
+            'Owner'
+          ),
+          React.createElement(
+            'th',
+            null,
+            'Title'
+          )
+        )
+      ),
+      React.createElement(
+        'tbody',
+        null,
+        bugRows
+      )
+    );
   }
 });
 
@@ -36393,7 +36514,13 @@ var BugList = React.createClass({
 
     //bugs = data attribute, passing in the "bugs" data array
 
-    return React.createElement('div', null, React.createElement(BugFilter, { loadData: this.changeFilter, urlFilter: this.props.location.query }), React.createElement(BugTable, { bugs: this.state.bugs }), React.createElement(BugAdd, { onBugSubmit: this.addBug }));
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(BugFilter, { loadData: this.changeFilter, urlFilter: this.props.location.query }),
+      React.createElement(BugTable, { bugs: this.state.bugs }),
+      React.createElement(BugAdd, { onBugSubmit: this.addBug })
+    );
   },
   changeFilter: function (newFilter) {
     this.context.router.push({ search: '?' + $.param(newFilter) });
