@@ -4,7 +4,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
-
+//ObjectID http://mongodb.github.io/node-mongodb-native/2.0/api/ObjectID.html
+var MongoObjectId = require('mongodb').ObjectID;
 var db;
 
 //this serves files pubicly , from declared directory in root of project
@@ -35,6 +36,26 @@ app.get('/api/bugs', function(req,res){
     res.json(docs);
   });
 });
+
+//this app get is to retrieve and return 1 entry (bug item)
+// ":id" is a param for express, once this is in the request it's accessible as an object req.param.id
+app.get('/api/bugs/:id', function(req,res){
+    db.collection('bugs').find({_id: MongoObjectId(req.params.id)}).toArray(function(err,docs){
+      res.json(docs);
+    });
+});
+
+app.put('/api/bugs/:id',function(req,res){
+//this updates an existing bug utilizing ID and request body sent in
+  var requestedUpdate = req.body;
+  //update one by id, body, callback function to respond with updated bug record
+  db.collection('bugs').updateOne({_id: MongoObjectId(req.params.id)}, requestedUpdate,function(err, result){
+        db.collection('bugs').find({_id: MongoObjectId(req.params.id)}).next(function(err,docs){
+      res.json(docs);
+    });
+  });
+});
+
 
 app.post('/api/bugs',function(req,res){
     //take in POST request , add ID, add data to array, return bug added to show ID
