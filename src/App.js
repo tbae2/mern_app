@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var BugList = require('./BugList');
+var BugEdit = require('./BugEdit');
 var ReactRouter = require('react-router');
 var Router = require('react-router').Router;
 var Route = require('react-router').Route;
@@ -29,6 +30,7 @@ ReactDOM.render(
     <Route path="/bugs" component={BugList}/>
     <Redirect from="/" to="/bugs"/>
     <Route path="*" component={NoMatch}/>
+    <Route path="/bugs/:id" component={BugEdit} />
   </Router>
 ,document.getElementById('main')
 );
