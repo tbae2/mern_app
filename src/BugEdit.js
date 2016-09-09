@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const $ = require('jquery');
-
+const Link = require('react-router').Link;
 
 var BugEdit = React.createClass({
 
@@ -78,6 +78,7 @@ var BugEdit = React.createClass({
           Title: <input type="text" value={this.state.title} onChange={this.onChangeTitle}/>
           <br />
           <button type="submit">Submit</button>
+          <Link to="/bugs">Return to Bug List</Link>
         </form>
       </div>
     );

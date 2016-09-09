@@ -36281,10 +36281,10 @@ module.exports = BugAdd;
 const React = require('react');
 const ReactDOM = require('react-dom');
 const $ = require('jquery');
+const Link = require('react-router').Link;
 
 var BugEdit = React.createClass({
   displayName: 'BugEdit',
-
 
   getInitialState: function () {
     return {};
@@ -36335,84 +36335,13 @@ var BugEdit = React.createClass({
     });
   },
   render: function () {
-    return React.createElement(
-      'div',
-      null,
-      React.createElement(
-        'h3',
-        null,
-        'Edit Bug: ',
-        this.props.params.id
-      ),
-      React.createElement(
-        'form',
-        { className: 'bugedit', onSubmit: this.submit },
-        'Priority:',
-        React.createElement(
-          'select',
-          { name: 'priority', onChange: this.onChangePriority, value: this.state.priority },
-          React.createElement(
-            'option',
-            { value: 'P1' },
-            'P1'
-          ),
-          React.createElement(
-            'option',
-            { value: 'P2' },
-            'P2'
-          ),
-          React.createElement(
-            'option',
-            { value: 'P3' },
-            'P3'
-          )
-        ),
-        React.createElement('br', null),
-        'Status:',
-        React.createElement(
-          'select',
-          { onChange: this.onChangeStatus, value: this.state.status },
-          React.createElement(
-            'option',
-            { value: 'New' },
-            'New'
-          ),
-          React.createElement(
-            'option',
-            { value: 'Closed' },
-            'Closed'
-          ),
-          React.createElement(
-            'option',
-            { value: 'Open' },
-            'Open'
-          ),
-          React.createElement(
-            'option',
-            { value: 'Fixed' },
-            'Fixed'
-          )
-        ),
-        React.createElement('br', null),
-        'Owner: ',
-        React.createElement('input', { type: 'text', value: this.state.owner, onChange: this.onChangeOwner }),
-        React.createElement('br', null),
-        'Title: ',
-        React.createElement('input', { type: 'text', value: this.state.title, onChange: this.onChangeTitle }),
-        React.createElement('br', null),
-        React.createElement(
-          'button',
-          { type: 'submit' },
-          'Submit'
-        )
-      )
-    );
+    return React.createElement('div', null, React.createElement('h3', null, 'Edit Bug: ', this.props.params.id), React.createElement('form', { className: 'bugedit', onSubmit: this.submit }, 'Priority:', React.createElement('select', { name: 'priority', onChange: this.onChangePriority, value: this.state.priority }, React.createElement('option', { value: 'P1' }, 'P1'), React.createElement('option', { value: 'P2' }, 'P2'), React.createElement('option', { value: 'P3' }, 'P3')), React.createElement('br', null), 'Status:', React.createElement('select', { onChange: this.onChangeStatus, value: this.state.status }, React.createElement('option', { value: 'New' }, 'New'), React.createElement('option', { value: 'Closed' }, 'Closed'), React.createElement('option', { value: 'Open' }, 'Open'), React.createElement('option', { value: 'Fixed' }, 'Fixed')), React.createElement('br', null), 'Owner: ', React.createElement('input', { type: 'text', value: this.state.owner, onChange: this.onChangeOwner }), React.createElement('br', null), 'Title: ', React.createElement('input', { type: 'text', value: this.state.title, onChange: this.onChangeTitle }), React.createElement('br', null), React.createElement('button', { type: 'submit' }, 'Submit'), React.createElement(Link, { to: '/bugs' }, 'Return to Bug List')));
   }
 });
 
 module.exports = BugEdit;
 
-},{"jquery":7,"react":233,"react-dom":8}],239:[function(require,module,exports){
+},{"jquery":7,"react":233,"react-dom":8,"react-router":38}],239:[function(require,module,exports){
 const React = require('react');
 const ReactDOM = require('react-dom');
 
