@@ -36235,7 +36235,7 @@ var NoMatch = React.createClass({
   }
 });
 
-ReactDOM.render(React.createElement(Router, { history: hashHistory }, React.createElement(Route, { path: '/bugs', component: BugList }), React.createElement(Redirect, { from: '/', to: '/bugs' }), React.createElement(Route, { path: '*', component: NoMatch }), React.createElement(Route, { path: '/bugs/:id', component: BugEdit })), document.getElementById('main'));
+ReactDOM.render(React.createElement(Router, { history: hashHistory }, React.createElement(Route, { path: '/bugs', component: BugList }), React.createElement(Route, { path: '/bugs/:id', component: BugEdit }), React.createElement(Redirect, { from: '/', to: '/bugs' }), React.createElement(Route, { path: '*', component: NoMatch })), document.getElementById('main'));
 
 },{"./BugEdit":238,"./BugList":240,"react":233,"react-dom":8,"react-router":38}],237:[function(require,module,exports){
 const React = require('react');
@@ -36284,6 +36284,7 @@ const $ = require('jquery');
 
 var BugEdit = React.createClass({
   displayName: 'BugEdit',
+
 
   getInitialState: function () {
     return {};
@@ -36334,7 +36335,78 @@ var BugEdit = React.createClass({
     });
   },
   render: function () {
-    return React.createElement('div', null, React.createElement('h3', null, 'Edit Bug: ', this.props.params.id), React.createElement('form', { className: 'bugedit', onSubmit: this.submit }, 'Priority:', React.createElement('select', { name: 'priority', onChange: this.onChangePriority, value: this.state.priority }, React.createElement('option', { value: 'P1' }, 'P1'), React.createElement('option', { value: 'P2' }, 'P2'), React.createElement('option', { value: 'P3' }, 'P3')), React.createElement('br', null), 'Status:', React.createElement('select', { onChange: this.onChangeStatus, value: this.state.status }, React.createElement('option', { value: 'New' }, 'New'), React.createElement('option', { value: 'Closed' }, 'Closed'), React.createElement('option', { value: 'Open' }, 'Open'), React.createElement('option', { value: 'Fixed' }, 'Fixed')), React.createElement('br', null), 'Owner: ', React.createElement('input', { type: 'text', value: this.state.owner, onChange: this.onChangeOwner }), React.createElement('br', null), 'Title: ', React.createElement('input', { type: 'text', value: this.state.title, onChange: this.onChangeTitle }), React.createElement('br', null), React.createElement('button', { type: 'submit' }, 'Submit')));
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'h3',
+        null,
+        'Edit Bug: ',
+        this.props.params.id
+      ),
+      React.createElement(
+        'form',
+        { className: 'bugedit', onSubmit: this.submit },
+        'Priority:',
+        React.createElement(
+          'select',
+          { name: 'priority', onChange: this.onChangePriority, value: this.state.priority },
+          React.createElement(
+            'option',
+            { value: 'P1' },
+            'P1'
+          ),
+          React.createElement(
+            'option',
+            { value: 'P2' },
+            'P2'
+          ),
+          React.createElement(
+            'option',
+            { value: 'P3' },
+            'P3'
+          )
+        ),
+        React.createElement('br', null),
+        'Status:',
+        React.createElement(
+          'select',
+          { onChange: this.onChangeStatus, value: this.state.status },
+          React.createElement(
+            'option',
+            { value: 'New' },
+            'New'
+          ),
+          React.createElement(
+            'option',
+            { value: 'Closed' },
+            'Closed'
+          ),
+          React.createElement(
+            'option',
+            { value: 'Open' },
+            'Open'
+          ),
+          React.createElement(
+            'option',
+            { value: 'Fixed' },
+            'Fixed'
+          )
+        ),
+        React.createElement('br', null),
+        'Owner: ',
+        React.createElement('input', { type: 'text', value: this.state.owner, onChange: this.onChangeOwner }),
+        React.createElement('br', null),
+        'Title: ',
+        React.createElement('input', { type: 'text', value: this.state.title, onChange: this.onChangeTitle }),
+        React.createElement('br', null),
+        React.createElement(
+          'button',
+          { type: 'submit' },
+          'Submit'
+        )
+      )
+    );
   }
 });
 
@@ -36382,7 +36454,58 @@ var BugFilter = React.createClass({
     this.props.loadData(newFilter);
   },
   render: function () {
-    return React.createElement('div', null, React.createElement('select', { onChange: this.selectChangePriority, value: this.state.priority }, React.createElement('option', { value: '' }, 'All'), React.createElement('option', { value: 'P1' }, 'P1'), React.createElement('option', { value: 'P2' }, 'P2'), React.createElement('option', { value: 'P3' }, 'P3'), React.createElement('option', { value: 'P4' }, 'P4')), React.createElement('select', { onChange: this.selectChangeStatus, value: this.state.status }, React.createElement('option', { value: 'open' }, 'open'), React.createElement('option', { value: 'closed' }, 'closed')), React.createElement('button', { onClick: this.sendFilter }, 'Filter'));
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'select',
+        { onChange: this.selectChangePriority, value: this.state.priority },
+        React.createElement(
+          'option',
+          { value: '' },
+          'All'
+        ),
+        React.createElement(
+          'option',
+          { value: 'P1' },
+          'P1'
+        ),
+        React.createElement(
+          'option',
+          { value: 'P2' },
+          'P2'
+        ),
+        React.createElement(
+          'option',
+          { value: 'P3' },
+          'P3'
+        ),
+        React.createElement(
+          'option',
+          { value: 'P4' },
+          'P4'
+        )
+      ),
+      React.createElement(
+        'select',
+        { onChange: this.selectChangeStatus, value: this.state.status },
+        React.createElement(
+          'option',
+          { value: 'open' },
+          'open'
+        ),
+        React.createElement(
+          'option',
+          { value: 'closed' },
+          'closed'
+        )
+      ),
+      React.createElement(
+        'button',
+        { onClick: this.sendFilter },
+        'Filter'
+      )
+    );
   }
 });
 
