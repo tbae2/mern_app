@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const $ = require('jquery');
-
+const Link = require('react-router').Link;
 const BugFilter = require('./BugFilter');
 const BugAdd = require('./BugAdd');
 
@@ -9,8 +9,9 @@ var BugRow = React.createClass({
   //receives the "bug" data object , properties, target them as below.
           render: function() {
     return (
+
         <tr className="bugrow">
-          <td>{this.props.bug._id}</td>
+          <td><Link to={'/bugs/'+ this.props.bug._id}>{this.props.bug._id}</Link></td>
           <td>{this.props.bug.status}</td>
           <td>{this.props.bug.priority}</td>
           <td>{this.props.bug.owner}</td>

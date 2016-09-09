@@ -36444,7 +36444,7 @@ module.exports = BugFilter;
 const React = require('react');
 const ReactDOM = require('react-dom');
 const $ = require('jquery');
-
+const Link = require('react-router').Link;
 const BugFilter = require('./BugFilter');
 const BugAdd = require('./BugAdd');
 
@@ -36453,41 +36453,12 @@ var BugRow = React.createClass({
 
   //receives the "bug" data object , properties, target them as below.
   render: function () {
-    return React.createElement(
-      'tr',
-      { className: 'bugrow' },
-      React.createElement(
-        'td',
-        null,
-        this.props.bug._id
-      ),
-      React.createElement(
-        'td',
-        null,
-        this.props.bug.status
-      ),
-      React.createElement(
-        'td',
-        null,
-        this.props.bug.priority
-      ),
-      React.createElement(
-        'td',
-        null,
-        this.props.bug.owner
-      ),
-      React.createElement(
-        'td',
-        null,
-        this.props.bug.title
-      )
-    );
+    return React.createElement('tr', { className: 'bugrow' }, React.createElement('td', null, React.createElement(Link, { to: '/bugs/' + this.props.bug._id }, this.props.bug._id)), React.createElement('td', null, this.props.bug.status), React.createElement('td', null, this.props.bug.priority), React.createElement('td', null, this.props.bug.owner), React.createElement('td', null, this.props.bug.title));
   }
 });
 
 var BugTable = React.createClass({
   displayName: 'BugTable',
-
 
   render: function () {
     //this maps the data sent from BugList, from the bugs array, you need key so that react can keep track of the component, bug sends all the data to BugRow as "bug"
@@ -36495,48 +36466,7 @@ var BugTable = React.createClass({
     var bugRows = this.props.bugs.map(function (bug) {
       return React.createElement(BugRow, { key: bug._id, bug: bug });
     });
-    return React.createElement(
-      'table',
-      null,
-      React.createElement(
-        'thead',
-        null,
-        React.createElement(
-          'tr',
-          null,
-          React.createElement(
-            'th',
-            null,
-            'ID'
-          ),
-          React.createElement(
-            'th',
-            null,
-            'Status'
-          ),
-          React.createElement(
-            'th',
-            null,
-            'Priority'
-          ),
-          React.createElement(
-            'th',
-            null,
-            'Owner'
-          ),
-          React.createElement(
-            'th',
-            null,
-            'Title'
-          )
-        )
-      ),
-      React.createElement(
-        'tbody',
-        null,
-        bugRows
-      )
-    );
+    return React.createElement('table', null, React.createElement('thead', null, React.createElement('tr', null, React.createElement('th', null, 'ID'), React.createElement('th', null, 'Status'), React.createElement('th', null, 'Priority'), React.createElement('th', null, 'Owner'), React.createElement('th', null, 'Title'))), React.createElement('tbody', null, bugRows));
   }
 });
 
@@ -36571,13 +36501,7 @@ var BugList = React.createClass({
 
     //bugs = data attribute, passing in the "bugs" data array
 
-    return React.createElement(
-      'div',
-      null,
-      React.createElement(BugFilter, { loadData: this.changeFilter, urlFilter: this.props.location.query }),
-      React.createElement(BugTable, { bugs: this.state.bugs }),
-      React.createElement(BugAdd, { onBugSubmit: this.addBug })
-    );
+    return React.createElement('div', null, React.createElement(BugFilter, { loadData: this.changeFilter, urlFilter: this.props.location.query }), React.createElement(BugTable, { bugs: this.state.bugs }), React.createElement(BugAdd, { onBugSubmit: this.addBug }));
   },
   changeFilter: function (newFilter) {
     this.context.router.push({ search: '?' + $.param(newFilter) });
@@ -36615,4 +36539,4 @@ BugList.contextTypes = {
 
 module.exports = BugList;
 
-},{"./BugAdd":237,"./BugFilter":239,"jquery":7,"react":233,"react-dom":8}]},{},[236]);
+},{"./BugAdd":237,"./BugFilter":239,"jquery":7,"react":233,"react-dom":8,"react-router":38}]},{},[236]);
