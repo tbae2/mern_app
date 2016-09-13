@@ -1,5 +1,9 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
+const Button = require('react-bootstrap').Button;
+const Panel = require('react-bootstrap').Panel;
+//try the es6 way
+
 
 var BugFilter = React.createClass({
   getInitialState: function(){
@@ -39,20 +43,22 @@ var BugFilter = React.createClass({
   },
   render: function () {
     return (
-    <div>
-      <select onChange={this.selectChangePriority} value={this.state.priority}>
-        <option value="">All</option>
-        <option value="P1">P1</option>
-        <option value="P2">P2</option>
-        <option value="P3">P3</option>
-        <option value="P4">P4</option>
-      </select>
-      <select onChange={this.selectChangeStatus} value={this.state.status}>
-        <option value="open">open</option>
-        <option value="closed">closed</option>
-      </select>
-      <button onClick={this.sendFilter}>Filter</button>
-    </div>
+      <div>
+        <Panel header="Filter">
+        <select onChange={this.selectChangePriority} value={this.state.priority}>
+          <option value="">All</option>
+          <option value="P1">P1</option>
+          <option value="P2">P2</option>
+          <option value="P3">P3</option>
+          <option value="P4">P4</option>
+        </select>
+        <select onChange={this.selectChangeStatus} value={this.state.status}>
+          <option value="open">open</option>
+          <option value="closed">closed</option>
+        </select>
+        <Button bsStyle="primary" onClick={this.sendFilter}>Filter</Button>
+        </Panel>
+      </div>
     )
   }
 });
