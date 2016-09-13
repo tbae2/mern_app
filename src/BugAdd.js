@@ -1,5 +1,10 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
+const Form = require('react-bootstrap').Form;
+const FormGroup = require('react-bootstrap').FormGroup;
+const Panel = require('react-bootstrap').Panel;
+const FormControl = require('react-bootstrap').FormControl;
+const ControlLabel = require('reqact-bootstrap').ControlLabel;
 
 var BugAdd = React.createClass({
   getInitialState: function(){
@@ -20,11 +25,17 @@ var BugAdd = React.createClass({
   },
   render: function() {
     return (
-      <form className="addBugForm">
-        <input type="text" value={this.state.owner} onChange={this.handleOwnerChange}/>
-        <input type="text" value={this.state.title} onChange={this.handleTitleChange}/>
-        <button type="button" onClick={this.handleSubmit}>Add Bug</button>
-      </form>
+      <Panel header="Add Bug">
+        <Form horizontal>
+          <FormGroup>
+            <FormControl type="text" placeholder="Owner" value={this.state.owner} onChange={this.handleOwnerChange}/>
+          </FormGroup>
+          <FormGroup>
+            <FormControl type="text" placeholder="Title" value={this.state.title} onChange={this.handleTitleChange}/>
+          </FormGroup>
+          <button type="button" onClick={this.handleSubmit}>Add Bug</button>
+        </Form>
+      </Panel>
   );
  }
 });

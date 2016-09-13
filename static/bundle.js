@@ -53947,6 +53947,9 @@ ReactDOM.render(React.createElement(Router, { history: hashHistory }, React.crea
 },{"./BugEdit":489,"./BugList":491,"react":481,"react-dom":236,"react-router":286}],488:[function(require,module,exports){
 const React = require('react');
 const ReactDOM = require('react-dom');
+const Form = require('react-bootstrap').Form;
+const FormGroup = require('react-bootstrap').FormGroup;
+const Panel = require('react-bootstrap').Panel;
 
 var BugAdd = React.createClass({
   displayName: 'BugAdd',
@@ -53968,23 +53971,13 @@ var BugAdd = React.createClass({
     this.setState({ owner: '', title: '' });
   },
   render: function () {
-    return React.createElement(
-      'form',
-      { className: 'addBugForm' },
-      React.createElement('input', { type: 'text', value: this.state.owner, onChange: this.handleOwnerChange }),
-      React.createElement('input', { type: 'text', value: this.state.title, onChange: this.handleTitleChange }),
-      React.createElement(
-        'button',
-        { type: 'button', onClick: this.handleSubmit },
-        'Add Bug'
-      )
-    );
+    return React.createElement(Panel, { header: 'Add Bug' }, React.createElement(Form, { horizontal: true }, React.createElement(FormGroup, null, React.createElement('input', { type: 'text', value: this.state.owner, onChange: this.handleOwnerChange })), React.createElement(FormGroup, null, React.createElement('input', { type: 'text', value: this.state.title, onChange: this.handleTitleChange })), React.createElement('button', { type: 'button', onClick: this.handleSubmit }, 'Add Bug')));
   }
 });
 
 module.exports = BugAdd;
 
-},{"react":481,"react-dom":236}],489:[function(require,module,exports){
+},{"react":481,"react-bootstrap":225,"react-dom":236}],489:[function(require,module,exports){
 const React = require('react');
 const ReactDOM = require('react-dom');
 const $ = require('jquery');
@@ -54130,6 +54123,10 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const Button = require('react-bootstrap').Button;
 const Panel = require('react-bootstrap').Panel;
+const Grid = require('react-bootstrap').Grid;
+const Col = require('react-bootstrap').Col;
+const Row = require('react-bootstrap').Row;
+const ButtonToolbar = require('react-bootstrap').ButtonToolbar;
 //try the es6 way
 
 
@@ -54171,7 +54168,7 @@ var BugFilter = React.createClass({
     this.props.loadData(newFilter);
   },
   render: function () {
-    return React.createElement('div', null, React.createElement(Panel, { header: 'Filter' }, React.createElement('select', { onChange: this.selectChangePriority, value: this.state.priority }, React.createElement('option', { value: '' }, 'All'), React.createElement('option', { value: 'P1' }, 'P1'), React.createElement('option', { value: 'P2' }, 'P2'), React.createElement('option', { value: 'P3' }, 'P3'), React.createElement('option', { value: 'P4' }, 'P4')), React.createElement('select', { onChange: this.selectChangeStatus, value: this.state.status }, React.createElement('option', { value: 'open' }, 'open'), React.createElement('option', { value: 'closed' }, 'closed')), React.createElement(Button, { bsStyle: 'primary', onClick: this.sendFilter }, 'Filter')));
+    return React.createElement(Panel, { header: 'Filter', collapsible: true, defaultExpanded: true }, React.createElement(Grid, { fluid: true }, React.createElement(Row, null, React.createElement(Col, { xs: 12, sm: 2, md: 4 }, React.createElement('select', { onChange: this.selectChangePriority, value: this.state.priority }, React.createElement('option', { value: '' }, 'All'), React.createElement('option', { value: 'P1' }, 'P1'), React.createElement('option', { value: 'P2' }, 'P2'), React.createElement('option', { value: 'P3' }, 'P3'), React.createElement('option', { value: 'P4' }, 'P4'))), React.createElement(Col, { xs: 12, sm: 2, md: 4 }, React.createElement('select', { onChange: this.selectChangeStatus, value: this.state.status }, React.createElement('option', { value: 'open' }, 'open'), React.createElement('option', { value: 'closed' }, 'closed'))), React.createElement(Col, { xs: 12, sm: 3, md: 4 }, React.createElement(ButtonToolbar, null, React.createElement(Button, { bsStyle: 'primary', onClick: this.sendFilter }, 'Filter'))))));
   }
 });
 
